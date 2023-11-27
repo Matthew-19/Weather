@@ -6,7 +6,7 @@ function App() {
   const [weatherData, setWeatherData] = React.useState(null);
   React.useEffect(() => {
     fetch(
-      "http://api.weatherapi.com/v1/forecast.json?key=13e532f19468403eb6234152232711&q=Cairo&days=7&aqi=no&alerts=no"
+      "https://api.weatherapi.com/v1/forecast.json?key=13e532f19468403eb6234152232711&q=Cairo&days=7&aqi=no&alerts=no"
     )
       .then((res) => res.json())
       .then((data) => setWeatherData(data));
