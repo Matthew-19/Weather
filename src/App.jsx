@@ -12,7 +12,7 @@ function App() {
       .then((res) => res.json())
       .then((data) => setWeatherData(data));
   }, []);
-  console.log(weatherData);
+  // console.log(weatherData);
 
   // Dark Mode
   const [darkMode, setDarkMode] = React.useState(true);
@@ -55,41 +55,46 @@ function App() {
     var lastUpdateTime = `${hours}:${minutes} ${am_pm}`;
 
     // Forecast
-    var forecastElements = weatherData.forecast.forecastday.map((item) => {
-      var forecastDate = new Date(item.date);
-      var day = forecastDate.getDay();
-      var dayName = daysArr[day];
+    var forecastElements = weatherData.forecast.forecastday.map(
+      (item, index) => {
+        var forecastDate = new Date(item.date);
+        var day = forecastDate.getDay();
+        var dayName = daysArr[day];
 
-      var maxTemp_c = Math.round(item.day.maxtemp_c);
-      var minTemp_c = Math.round(item.day.mintemp_c);
-      var maxTemp_f = Math.round(item.day.maxtemp_f);
-      var minTemp_f = Math.round(item.day.mintemp_f);
+        var maxTemp_c = Math.round(item.day.maxtemp_c);
+        var minTemp_c = Math.round(item.day.mintemp_c);
+        var maxTemp_f = Math.round(item.day.maxtemp_f);
+        var minTemp_f = Math.round(item.day.mintemp_f);
 
-      var maxTemp = degree === "c" ? maxTemp_c : maxTemp_f;
-      var minTemp = degree === "c" ? minTemp_c : minTemp_f;
+        var maxTemp = degree === "c" ? maxTemp_c : maxTemp_f;
+        var minTemp = degree === "c" ? minTemp_c : minTemp_f;
 
-      var icon = item.day.condition.icon;
-      var description = item.day.condition.text;
+        var icon = item.day.condition.icon;
+        var description = item.day.condition.text;
 
-      return (
-        <div key={forecastDate} className="weather--forecast-card">
-          <div className="weather--forecast-day">{dayName}</div>
-          <div className="weather--forecast-temperature">
-            <div className="maxTemp">
-              {maxTemp} º<span className="weather--degree">{degree}</span>
+        return (
+          <div key={forecastDate} className="weather--forecast-card">
+            <div className="weather--forecast-day">
+              {dayName}
+              {index === 0 && ` - Today`}
             </div>
-            <div>/</div>
-            <div className="minTemp">
-              {minTemp} º<span className="weather--degree">{degree}</span>
+            <div className="weather--forecast-temperature">
+              <div className="maxTemp">
+                {maxTemp} º<span className="weather--degree">{degree}</span>
+              </div>
+              <div>/</div>
+              <div className="minTemp">
+                {minTemp} º<span className="weather--degree">{degree}</span>
+              </div>
+            </div>
+            <div className="weather--forecast-details">
+              <img src={`http://${icon}`} className="weather--forecast-icon" />
+              <div className="weather--forecast-description">{description}</div>
             </div>
           </div>
-          <div className="weather--forecast-details">
-            <img src={`http://${icon}`} className="weather--forecast-icon" />
-            <div className="weather--forecast-description">{description}</div>
-          </div>
-        </div>
-      );
-    });
+        );
+      }
+    );
   }
   if (!weatherData) {
     return <h1>Loading...</h1>;
