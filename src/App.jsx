@@ -3,6 +3,7 @@ import "./App.css";
 import { FaRegSun, FaRegMoon } from "react-icons/fa6";
 
 function App() {
+  // Get Weather Data
   const [weatherData, setWeatherData] = React.useState(null);
   React.useEffect(() => {
     fetch(
@@ -13,15 +14,29 @@ function App() {
   }, []);
   console.log(weatherData);
 
+  // Dark Mode
   const [darkMode, setDarkMode] = React.useState(true);
   function handleToggle() {
     setDarkMode(!darkMode);
   }
   const mode = darkMode ? "dark" : "light";
 
+  // Current Weather, Forecast & Degree
   const daysArr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  const [degree, setDegree] = React.useState("c");
+  function toggleDegree() {
+    setDegree((prevDegree) => {
+      return prevDegree === "c" ? "f" : "c";
+    });
+  }
+
   if (weatherData) {
-    // Getting Last Updated Day and Time
+    // Getting Last Updated Weather, Day and Time
+    var currentWeather_c = Math.round(weatherData.current.temp_c);
+    var currentWeather_f = Math.round(weatherData.current.temp_f);
+    var currentWeather = degree === "c" ? currentWeather_c : currentWeather_f;
+
     var currentDate = new Date(weatherData.current.last_updated);
 
     var day = currentDate.getDay();
@@ -45,8 +60,13 @@ function App() {
       var day = forecastDate.getDay();
       var dayName = daysArr[day];
 
-      var maxTemp = Math.round(item.day.maxtemp_c);
-      var minTemp = Math.round(item.day.mintemp_c);
+      var maxTemp_c = Math.round(item.day.maxtemp_c);
+      var minTemp_c = Math.round(item.day.mintemp_c);
+      var maxTemp_f = Math.round(item.day.maxtemp_f);
+      var minTemp_f = Math.round(item.day.mintemp_f);
+
+      var maxTemp = degree === "c" ? maxTemp_c : maxTemp_f;
+      var minTemp = degree === "c" ? minTemp_c : minTemp_f;
 
       var icon = item.day.condition.icon;
       var description = item.day.condition.text;
@@ -55,9 +75,13 @@ function App() {
         <div key={forecastDate} className="weather--forecast-card">
           <div className="weather--forecast-day">{dayName}</div>
           <div className="weather--forecast-temperature">
-            <div className="maxTemp">{maxTemp} ºC</div>
+            <div className="maxTemp">
+              {maxTemp} º<span className="weather--degree">{degree}</span>
+            </div>
             <div>/</div>
-            <div className="minTemp">{minTemp} ºC</div>
+            <div className="minTemp">
+              {minTemp} º<span className="weather--degree">{degree}</span>
+            </div>
           </div>
           <div className="weather--forecast-details">
             <img src={`http://${icon}`} className="weather--forecast-icon" />
@@ -72,23 +96,42 @@ function App() {
   }
   return (
     <div className={`container ${mode}`}>
-      <div onClick={handleToggle} className="button--group">
-        <FaRegSun className="sun--icon" />
-        <div className="toggle--darkMode">
-          <div className="circle"></div>
+      <nav>
+        <a
+          href="https://www.weatherapi.com/"
+          target="_blank"
+          title="Free Weather API"
+        >
+          <img
+            src="//cdn.weatherapi.com/v4/images/weatherapi_logo.png"
+            alt="Weather data by WeatherAPI.com"
+            border="0"
+            className="nav--icon"
+          />
+        </a>
+        <div onClick={handleToggle} className="button--group">
+          <FaRegSun className="sun--icon" />
+          <div className="toggle--darkMode">
+            <div className="circle"></div>
+          </div>
+          <FaRegMoon className="moon--icon" />
         </div>
-        <FaRegMoon className="moon--icon" />
-      </div>
+      </nav>
 
       <main className="weather--current">
         <h1 className="location">{weatherData.location.name}</h1>
         <p className="lastUpdate">
           Last Updated: {`${lastUpdateDay} ${lastUpdateTime}`}
         </p>
+        <div className="weather--degree-select">
+          <button onClick={toggleDegree} className="weather--degree">
+            º{degree}
+          </button>
+        </div>
 
         <div className="weather--details">
           <h1 className="weather--temperature">
-            {Math.ceil(weatherData.current.temp_c)} ºC
+            {currentWeather} º<span className="weather--degree">{degree}</span>
           </h1>
           <img
             src={`http://${weatherData.current.condition.icon}`}
