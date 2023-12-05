@@ -51,6 +51,8 @@ function App() {
     if (hours > 12) {
       hours -= 12;
       am_pm = "pm";
+    } else if (hours === 0) {
+      hours = 12;
     }
     var lastUpdateTime = `${hours}:${minutes} ${am_pm}`;
 
