@@ -1,11 +1,11 @@
-# Demo
-https://matthew-19.github.io/Weather/
+# Weather of Cairo, Egypt
 
-# React + Vite
+This is a simple React + Vite Project showing the weather for Cairo, Egypt. By fetching the data from the free [WeatherAPI](https://www.weatherapi.com/), it shows the weather for the current and the following two days.
+### Features 
+- 📱Fully Responsive
+- 🌙 Dark Mode
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+### Preview: https://matthew-19.github.io/Weather/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
