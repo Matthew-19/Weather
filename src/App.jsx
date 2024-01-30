@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { FaRegSun, FaRegMoon } from "react-icons/fa6";
+import ToggleTheme from "./components/ToggleTheme";
 
 function App() {
   // Get Weather Data
@@ -98,9 +98,7 @@ function App() {
       }
     );
   }
-  if (!weatherData) {
-    return <h1>Loading...</h1>;
-  }
+
   return (
     <div className={`container ${mode}`}>
       <nav>
@@ -116,41 +114,48 @@ function App() {
             className="nav--icon"
           />
         </a>
-        <div onClick={handleToggle} className="button--group">
-          <FaRegSun className="sun--icon" />
-          <div className="toggle--darkMode">
-            <div className="circle"></div>
+        <div className="weather--settings">
+          <div className="weather--degree-select">
+            <button onClick={toggleDegree} className="weather--degree">
+              º{degree}
+            </button>
           </div>
-          <FaRegMoon className="moon--icon" />
+          <ToggleTheme theme={mode} handleToggle={handleToggle}/>
         </div>
       </nav>
 
-      <main className="weather--current">
-        <h1 className="location">{weatherData.location.name}</h1>
-        <p className="lastUpdate">
-          Last Updated: {`${lastUpdateDay} ${lastUpdateTime}`}
-        </p>
-        <div className="weather--degree-select">
-          <button onClick={toggleDegree} className="weather--degree">
-            º{degree}
-          </button>
-        </div>
+      {!weatherData ? (
+        <h1>Loading...</h1>
+      ) : (
+        <>
+          <main className="weather--current">
+            <div className="weather--main-header">
+              <div>
+                <h1 className="location">{weatherData.location.name}</h1>
+                <p className="lastUpdate">
+                  Last Updated: {`${lastUpdateDay} ${lastUpdateTime}`}
+                </p>
+              </div>
 
-        <div className="weather--details">
-          <h1 className="weather--temperature">
-            {currentWeather} º<span className="weather--degree">{degree}</span>
-          </h1>
-          <img
-            src={`http://${weatherData.current.condition.icon}`}
-            className="weather--icon"
-          />
-          <div className="weather--description">
-            {weatherData.current.condition.text}
-          </div>
-        </div>
-      </main>
+              <div className="weather--details">
+                <h1 className="weather--temperature">
+                  {currentWeather} º
+                  <span className="weather--degree">{degree}</span>
+                </h1>
+                <img
+                  src={`http://${weatherData.current.condition.icon}`}
+                  className="weather--icon"
+                />
+                <div className="weather--description">
+                  {weatherData.current.condition.text}
+                </div>
+              </div>
+            </div>
+          </main>
 
-      <section className="weather--forecast">{forecastElements}</section>
+          <section className="weather--forecast">{forecastElements}</section>
+        </>
+      )}
     </div>
   );
 }

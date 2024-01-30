@@ -41,6 +41,38 @@ nav {
   justify-content: space-between;
 }
 
+.nav--icon {
+  background-color: rgba(155, 212, 228, 0.357);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.weather--settings {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.weather--degree-select {
+  display: flex;
+  justify-content: center;
+}
+
+.weather--degree-select button {
+  padding-block: 5px;
+  width: 60px;
+  font-size: 16px;
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.13);
+  border-radius: 6px;
+}
+.dark .weather--degree-select button {
+  color: var(--light-color);
+}
+.light .weather--degree-select button {
+  color: var(--dark-color);
+}
+
 /* Toggle Dark Mode Button */
 
 .button--group {
@@ -91,26 +123,14 @@ nav {
 /* Navbar */
 
 /* Main */
-main .weather--degree-select {
-  margin-top: 10px;
+main .weather--main-header {
   display: flex;
-  justify-content: center;
-  gap: 1px;
-}
+  flex-direction: column;
+  gap: 20px;
 
-main .weather--degree-select button {
-  padding-block: 5px;
-  width: 60px;
-  font-size: 16px;
-  /* From https://css.glass */
-  background: rgba(255, 255, 255, 0.13);
-  border-radius: 6px;
-}
-.dark main .weather--degree-select button {
-  color: var(--light-color);
-}
-.light main .weather--degree-select button {
-  color: var(--dark-color);
+  @media only screen and (min-width: 768px) {
+    flex-direction: row;
+  }
 }
 
 main .weather--temperature {
@@ -133,7 +153,6 @@ main .weather--description {
   left: 50%;
   transform: translate(-50%);
   font-weight: bold;
-  width: 250px;
 }
 
 main .weather--icon {
