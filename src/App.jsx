@@ -7,12 +7,11 @@ function App() {
   const [weatherData, setWeatherData] = React.useState(null);
   React.useEffect(() => {
     fetch(
-      "https://api.weatherapi.com/v1/forecast.json?key=13e532f19468403eb6234152232711&q=Cairo&days=7&aqi=no&alerts=no"
+      "http://api.weatherapi.com/v1/forecast.json?key=13e532f19468403eb6234152232711 &q=Cairo&days=7&aqi=no&alerts=no"
     )
       .then((res) => res.json())
       .then((data) => setWeatherData(data));
   }, []);
-  // console.log(weatherData);
 
   // Dark Mode
   const [darkMode, setDarkMode] = React.useState(true);
@@ -120,14 +119,22 @@ function App() {
               º{degree}
             </button>
           </div>
-          <ToggleTheme theme={mode} handleToggle={handleToggle}/>
+          <ToggleTheme theme={mode} handleToggle={handleToggle} />
         </div>
       </nav>
 
       {!weatherData ? (
-        <h1>Loading...</h1>
+        <div className="loading">
+          <h1>
+            Loading
+            <span>.</span>
+            <span>.</span>
+            <span>.</span>
+          </h1>
+          <h6>Looking outside for you... one sec</h6>
+        </div>
       ) : (
-        <>
+        <div className="hero--content">
           <main className="weather--current">
             <div className="weather--main-header">
               <div>
@@ -154,7 +161,7 @@ function App() {
           </main>
 
           <section className="weather--forecast">{forecastElements}</section>
-        </>
+        </div>
       )}
     </div>
   );

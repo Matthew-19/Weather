@@ -17,9 +17,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   margin: auto;
-  padding-bottom: 20px;
+  padding-block: 20px;
 }
 .container.light {
   background-color: #9bd4e4;
@@ -123,6 +123,15 @@ nav {
 /* Navbar */
 
 /* Main */
+.hero--content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex: 1;
+}
+
 main .weather--main-header {
   display: flex;
   flex-direction: column;
@@ -153,6 +162,7 @@ main .weather--description {
   left: 50%;
   transform: translate(-50%);
   font-weight: bold;
+  width: max-content;
 }
 
 main .weather--icon {
@@ -234,3 +244,45 @@ main .lastUpdate {
 }
 
 /* Weather--forecast */
+/* Loading */
+.loading {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading h6 {
+  text-transform: capitalize;
+  font-size: large;
+}
+
+.loading span {
+  opacity: 0;
+  animation-name: loadingDots;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+.loading span:nth-child(1) {
+  animation-delay: 130ms;
+}
+.loading span:nth-child(2) {
+  animation-delay: 240ms;
+}
+.loading span:nth-child(3) {
+  animation-delay: 390ms;
+}
+
+@keyframes loadingDots {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Loading */
